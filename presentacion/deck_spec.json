@@ -19,7 +19,7 @@
       ],
       "background": "F7F9FC",
       "slide_number": true,
-      "notes": "Un minuto. Ligar cada obxectivo cunha parte da memoria e cunha das tres imaxes."
+      "notes": "Medio minuto. Ligar cada obxectivo cunha parte da memoria e cunha das tres imaxes."
     },
     {
       "layout": "title_content",
@@ -27,7 +27,7 @@
       "bullets": [
         "Deducción: Taylor de orde 1 arredor de x_n",
         "Xeometría: a tanxente corta o eixo OX no seguinte punto",
-        "Convergencia cuadrática se a derivada non se anula",
+        "Orde 2 para raíces simples; g'(c) = 0",
         "En complexo: cada punto do plano escolle unha raíz"
       ],
       "background": "F7F9FC",
@@ -35,7 +35,7 @@
       "shapes": [
         {"type": "rounded_rectangle", "left": 8.6, "top": 1.5, "width": 4.1, "height": 1.3, "fill": "123A5A", "text": "x(n+1) = x_n - f(x_n)/f'(x_n)"}
       ],
-      "notes": "Dous minutos. Debuxar a tanxente no aire: o punto onde corta o eixo é a nova aproximación. Salientar que en complexo xa non hai unha soa entrada, senón todo un plano."
+      "notes": "Un minuto e medio. Debuxar a tanxente no aire: o punto onde corta o eixo é a nova aproximación. Salientar que en complexo xa non hai unha soa entrada, senón todo un plano."
     },
     {
       "layout": "title_content",
@@ -44,14 +44,14 @@
         "Edmond Halley, astrónomo inglés, século XVII",
         "Usa Taylor de orde 2 e unha aproximación racional",
         "Ten en conta a curvatura f''(x_n), non só a pendente",
-        "Convergencia cúbica para raíces simples"
+        "Orde 3 para raíces simples; g'(c) = 0"
       ],
       "background": "F7F9FC",
       "slide_number": true,
       "shapes": [
         {"type": "rounded_rectangle", "left": 8.1, "top": 1.5, "width": 4.6, "height": 1.5, "fill": "123A5A", "text": "x(n+1) = x_n - f f' / (f'² - f f''/2)"}
       ],
-      "notes": "Un minuto e medio. O dato histórico conecta co cometa. A idea xeométrica: substituír a recta por unha aproximación que tamén sente a curvatura."
+      "notes": "Un minuto. O dato histórico conecta co cometa. A idea xeométrica: substituír a recta por unha aproximación que tamén sente a curvatura."
     },
     {
       "layout": "title_content",
@@ -59,7 +59,7 @@
       "bullets": [
         "Fórmula: x - f/f' - f² f''/(2 f'³)",
         "Corrección polinómica engadida ao paso de Newton",
-        "Tamén converge con orde 3",
+        "Orde 3 para raíces simples; g'(c) = 0",
         "Chebyshev é polinómico; Halley é racional"
       ],
       "background": "F7F9FC",
@@ -79,40 +79,40 @@
       ],
       "tables": [
         {"left": 0.8, "top": 4.6, "width": 11.7, "height": 1.8,
-         "rows": [["Newton", "Halley", "Chebyshev"], ["Orde 2 · g(z) = -z(2z+1)", "Orde 3 · g(z) = -z/(4z+3)", "Orde 3 · g(z) = z²(4z+3)"]]}
+         "rows": [["Newton", "Halley", "Chebyshev"], ["Orde 2 · media 7,02", "Orde 3 · media 3,98", "Orde 3 · media 5,28"]]}
       ],
       "background": "F7F9FC",
       "slide_number": true,
-      "notes": "Dous minutos. As tres imaxes usan a mesma función f(z) = z/sqrt(z²+z) e a mesma ventá. Só cambia g(z). Os puntos de ramificación están en 0 e -1."
+      "notes": "Un minuto e medio. As tres imaxes usan a mesma función f(z) = z³ - 2z + 2 e a mesma ventá [-2, 2] x [-2, 2]. Só cambia g(z). As tres raíces son -1,7693 e 0,8846 ± 0,5897i; as derivadas son 3z² - 2 e 6z."
     },
     {
       "layout": "title_content",
       "title": "Resultados numéricos",
       "bullets": [
-        "Malla de 301 x 301 puntos, tolerancia 1e-6",
-        "Newton: media 13,56 iteracións",
-        "Halley: media 25,22 iteracións",
-        "Chebyshev: media 4,88 iteracións"
+        "Malla de 601 x 601 puntos, tolerancia 1e-6",
+        "Newton: media 7,02 iteracións",
+        "Halley: media 3,98 iteracións",
+        "Chebyshev: media 5,28 iteracións"
       ],
       "background": "F7F9FC",
       "slide_number": true,
       "shapes": [
-        {"type": "rounded_rectangle", "left": 8.2, "top": 2.0, "width": 4.4, "height": 1.2, "fill": "0E7C86", "text": "Chebyshev: 94,68 % converxe en menos de 10 pasos"},
-        {"type": "rounded_rectangle", "left": 8.2, "top": 3.6, "width": 4.4, "height": 1.2, "fill": "B85042", "text": "Newton: 30,82 % non converxe en 30 pasos"}
+        {"type": "rounded_rectangle", "left": 8.2, "top": 2.0, "width": 4.4, "height": 1.2, "fill": "0E7C86", "text": "Halley: 99,69 % converxe en menos de 10 pasos"},
+        {"type": "rounded_rectangle", "left": 8.2, "top": 3.6, "width": 4.4, "height": 1.2, "fill": "B85042", "text": "Newton: 1,11 % non converxe en 30 pasos"}
       ],
-      "notes": "Un minuto. A orde teórica non explica por si soa o resultado: o polo en z = -1 condiciona a convergencia de Halley."
+      "notes": "Un minuto. A orde teórica non explica por si soa o resultado: as concas son irregulares e os polos de g están nos ceros de f', en z = máis ou menos 0,816497."
     },
     {
       "layout": "title_content",
       "title": "Conclusións",
       "bullets": [
         "Os tres métodos xeran fractais distintos coa mesma función",
-        "Chebyshev foi o máis rápido nesta ventá",
+        "Halley foi o máis rápido nesta ventá",
         "A localización de raíces e polos importa tanto como a fórmula",
         "Bibliografía: Varona [1], [2], 3B1B [3] e Gleick [4]"
       ],
       "background": "0B1020",
-      "notes": "Pechar cunha pregunta: que pasaría se ampliásemos a ventá arredor de z = -1? Remitir á memoria para os detalles e as fórmulas completas."
+      "notes": "Medio minuto. Pechar cunha pregunta: que pasaría se ampliásemos a ventá arredor dun cero de f'? Remitir á memoria para os detalles e as fórmulas completas."
     }
   ]
 }

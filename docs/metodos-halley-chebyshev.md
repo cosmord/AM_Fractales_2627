@@ -1,6 +1,6 @@
 # Halley.py y Chebyshev.py
 
-Los otros dos gráficos salen de copiar [`Newton.py`](../Newton.py) y sustituir únicamente la función de iteración `g(z)`. El bucle, la malla y la guarda contra desbordamientos se quedan igual. Si aún no has generado el primer fractal, empieza por [el tutorial](tutorial-primer-fractal.md) y consulta [docs/newton-py.md](newton-py.md) para los parámetros.
+Los otros dos gráficos salen de copiar [`Newton.py`](../Newton.py) y sustituir únicamente la función de iteración `g(z)`. El bucle, la malla y la guarda contra desbordamientos se quedan igual; los tres recorren ahora la malla completa de 601 x 601 puntos. Si aún no has generado el primer fractal, empieza por [el tutorial](tutorial-primer-fractal.md) y consulta [docs/newton-py.md](newton-py.md) para los parámetros.
 
 ## Fórmulas
 

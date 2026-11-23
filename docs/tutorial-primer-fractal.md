@@ -28,7 +28,7 @@ Debe salir `listo`.
 python Newton.py
 ```
 
-Verás por pantalla el encabezado `MÉTODO DE NEWTON` y las expresiones de `f(z)`, `derf(z)` y `g(z)`. Al terminar aparece `fractal_Newton.png` dentro de la carpeta `imaxes/`. La imagen tarda unos segundos porque `npuntos=300` y se guarda a 300 dpi.
+Verás por pantalla el encabezado `MÉTODO DE NEWTON` y las expresiones de `f(z)`, `derf(z)` y `g(z)`. Al terminar aparece `fractal_Newton.png` dentro de la carpeta `imaxes/`. La imagen tarda unos segundos porque `npuntos=600` y se guarda a 300 dpi.
 
 ## Paso 3: mirar el resultado
 

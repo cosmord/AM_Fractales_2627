@@ -17,28 +17,28 @@ Programa base que dibuja el fractal del método de Newton para la función compl
 La función del grupo es:
 
 ```python
-f = z/sp.sqrt(z**2+z)
+f = z**3-2*z+2
 ```
 
-Tiene puntos de ramificación en `z = 0` y `z = -1`. Eso explica parte de las líneas que aparecen en la imagen; no son un error del programa.
+Tiene tres raíces simples: `-1,769292`, `0,884646 + 0,589743i` y `0,884646 - 0,589743i`. Su derivada se anula en `z = ±0,816497`, dentro de la ventana; ahí `g(z)` tiene polos en Newton y Chebyshev (en Halley el factor cancela) y la guarda del bucle corta la iteración. Eso explica los puntos aislados, no es un error del programa.
 
 ## Parámetros
 
 | Parámetro | Valor actual | Efecto | Editable |
 |---|---|---|---|
 | `maxiter` | 30 | Máximo de pasos por punto. Más pasos, más detalle en las fronteras | Sí |
-| `a`, `b` | -1.1, 0.6 | Borde horizontal de la ventana, eje real | Sí |
-| `c`, `d` | -0.5, 0.5 | Borde vertical, eje imaginario | Sí |
-| `npuntos` | 300 | Puntos por eje. La malla tiene `(npuntos+1)^2` puntos | Sí |
+| `a`, `b` | -2, 2 | Borde horizontal de la ventana, eje real | Sí |
+| `c`, `d` | -2, 2 | Borde vertical, eje imaginario | Sí |
+| `npuntos` | 600 | Puntos por eje. La malla tiene `(npuntos+1)^2` puntos | Sí |
 | `tol` | 1e-6 | Umbral de convergencia sobre `|f(z)|` | No, está en el bloque fijo |
 | `cmap` | `turbo` | Gama de colores | Sí, por estética |
 | `dpi` | 300 | Resolución del PNG guardado | Sí |
 
-Subir `npuntos` de 300 a 600 cuadruplica el trabajo. Para probar, baja a 150 y sube solo la imagen final.
+Subir `npuntos` de 600 a 1200 cuadruplica el trabajo. Para probar, baja a 300 y sube solo la imagen final.
 
 ## Qué hace el bucle
 
-Para cada par de índices `i, j` entre `0` y `npuntos-1` se toma `z0 = x[i] + 1j*y[j]`:
+Para cada par de índices `i, j` entre `0` y `npuntos` se toma `z0 = x[i] + 1j*y[j]`:
 
 1. Pone `n = 0`.
 2. Mientras `n < maxiter` y `|f(z)| > tol`, aplica `z = g(z)` y suma 1 a `n`.
@@ -63,7 +63,7 @@ Se guarda `imaxes/fractal_Newton.png` (la carpeta se crea si no existe) y la fig
 
 Sí: `f`, los parámetros de la ventana, `maxiter`, `npuntos`, `cmap`, `dpi`, el texto de los `print` y el nombre del PNG.
 
-No: el bloque entre las dos líneas de "NON MODIFICAR". Si necesitas otro método, copia el archivo a `Halley.py` o `Chebyshev.py` y cambia solo `g`. Ver [docs/metodos-halley-chebyshev.md](metodos-halley-chebyshev.md). Para un recorrido desde cero, [docs/tutorial-primer-fractal.md](tutorial-primer-fractal.md).
+No, salvo la excepción documentada: los rangos de `i` y `j` se ampliaron a `npuntos+1` porque con `npuntos` quedaban 601 celdas sin calcular. Si necesitas otro método, copia el archivo a `Halley.py` o `Chebyshev.py` y cambia solo `g`. Ver [docs/metodos-halley-chebyshev.md](metodos-halley-chebyshev.md). Para un recorrido desde cero, [docs/tutorial-primer-fractal.md](tutorial-primer-fractal.md).
 
 Dentro del bucle, `z` deja de ser el símbolo de SymPy y pasa a ser un número complejo. No lo renombres.
 

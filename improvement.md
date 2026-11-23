@@ -124,7 +124,7 @@ POST /api/compute
   "function": "z/(z**2+z)**(1/2)",
   "method": "newton",
   "viewport": {"a": -1.1, "b": 0.6, "c": -0.5, "d": 0.5},
-  "npuntos": 300,
+  "npuntos": 600,
   "maxiter": 30,
   "tol": 1e-6
 }
@@ -145,14 +145,14 @@ POST /api/compute
 
 ## Precisión y paridad: el punto delicado
 
-La función del grupo, `f(z) = z/√(z²+z)`, tiene puntos de ramificación en `z=0` y `z=-1`. NumPy y un shader GLSL pueden elegir ramas distintas del logaritmo complejo. Si eso pasa, la imagen del explorador no coincide con `fractal_Newton.png` y la herramienta miente.
+La función del grupo, `f(z) = z³-2z+2`, es un polinomio sin cortes de rama. El punto delicado son los ceros de `f'`, en `z=±0,816497`, donde `g(z)` tiene polos y la guarda `abs(g(z)) < 1/tol` decide el color. Un shader y NumPy pueden tratar el desbordamiento de forma distinta: si eso pasa, la imagen del explorador no coincide con `fractal_Newton.png` y la herramienta miente.
 
 Antes de mostrar cualquier gráfico:
 
 1. Tomar una muestra de 20 a 50 puntos complejos y comparar `g(z)` calculada en Python con la del renderizador.
 2. Comparar el conteo de iteraciones de esos puntos contra la matriz que produce `Newton.py`.
 3. Repetir la comprobación para Halley y Chebyshev, que añaden `f''`.
-4. Documentar la tolerancia aceptada. Si un solo píxel difiere por ramificación, se marca como diferencia conocida en la memoria.
+4. Documentar la tolerancia aceptada. Si un solo píxel difiere cerca de un polo de `g`, se marca como diferencia conocida en la memoria.
 
 Otra trampa: Halley y Chebyshev necesitan derivada segunda. Si se calcula en el shader, hay que generar esa expresión desde SymPy y revisarla. Más seguro: calcular en Python y enviar al navegador una textura con la matriz de iteraciones. Plotly sirve para el histograma y la superficie 3D, no para mover 2000×2000 píxeles; ya hay reportes de lentitud con matrices grandes ([hilo de Plotly](https://community.plotly.com/t/performance-issues-when-displaying-large-matrices-as-heatmaps/23845)).
 

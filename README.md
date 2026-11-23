@@ -13,16 +13,20 @@ Trabajo de Análise Matemática de la UVigo (ESEI Ourense, Grado en Enxeñaría 
 | [`docs/newton-py.md`](docs/newton-py.md) | Cómo está montado `Newton.py` y qué se puede cambiar. |
 | [`docs/metodos-halley-chebyshev.md`](docs/metodos-halley-chebyshev.md) | Cómo derivar `Halley.py` y `Chebyshev.py`. |
 | [`improvement.md`](improvement.md) | Propuesta investigada de una interfaz glassmorphism tipo GeoGebra para el trabajo. |
+| [`profe.md`](profe.md) | Evaluación del profesor sobre `vibedv2`: nota 8,5/10, preguntas y correcciones. |
 | [`Newton.py`](Newton.py), [`Halley.py`](Halley.py), [`Chebyshev.py`](Chebyshev.py) | Código fuente de los tres fractales. |
 | [`memoria/memoria.pdf`](memoria/memoria.pdf) | Memoria escrita en gallego, con resultados reales. |
 | [`presentacion/presentacion.pptx`](presentacion/presentacion.pptx) | Presentación de 8 diapositivas con notas. |
+| [`presentacion/html/index.html`](presentacion/html/index.html) | Presentación HTML para clase: VS Code, Cascadia Code, partículas y animaciones. |
+| [`docs/ejecucion.md`](docs/ejecucion.md) | Comandos para ejecutar y reconstruir toda la entrega. |
+| [`scripts/rebuild_artifacts.py`](scripts/rebuild_artifacts.py) | Reconstruye memoria, PPTX y ZIP desde los specs. |
 | [`imaxes/`](imaxes/) | Tres imágenes PNG generadas por los scripts. |
 | [`entrega_AM.zip`](entrega_AM.zip) | ZIP final para subir a MOOVI. |
 | [`AGENTS.md`](AGENTS.md) | Reglas de trabajo y checklist antes de subir el ZIP. |
 
 ## Entrega final
 
-El ZIP `entrega_AM.zip` contiene memoria, presentación, los tres scripts y las tres imágenes. Los resultados numéricos de la memoria y las diapositivas salieron de ejecutar los tres scripts sobre una malla de 301 x 301 puntos.
+El ZIP `entrega_AM.zip` contiene memoria, presentación, los tres scripts y las tres imágenes. Los resultados numéricos de la memoria y las diapositivas salieron de ejecutar los tres scripts sobre una malla de 601 x 601 puntos.
 
 ## Secuencia mínima
 

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="gl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fractais · métodos iterativos — presentación VS Code</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@5.3.0/index.min.css">
+<style>
+:root{
+  --bg:#1e1e1e; --panel:#252526; --panel2:#2d2d30; --border:#3c3c3c;
+  --text:#d4d4d4; --muted:#858585; --kw:#c586c0; --fn:#dcdcaa;
+  --num:#b5cea8; --str:#ce9178; --com:#6a9955; --accent:#4ec9b0;
+  --blue:#569cd6; --red:#f14c4c; --glass:rgba(37,37,38,.74);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:"Cascadia Code",Consolas,"Courier New",monospace;
+  font-size:16px;-webkit-font-smoothing:antialiased;
+}
+#particles{position:fixed;inset:0;z-index:0;opacity:.42;pointer-events:none}
+.ide{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column}
+.titlebar{height:38px;display:flex;align-items:center;gap:14px;background:#323233;border-bottom:1px solid #1b1b1b;padding:0 14px;flex:none}
+.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:#f14c4c}.dots i:nth-child(2){background:#cca700}.dots i:nth-child(3){background:#89d185}
+.menu{color:#cccccc;font-size:12px;letter-spacing:.02em;opacity:.85}
+.tabs{display:flex;gap:2px;margin-left:18px;flex:1;overflow:hidden}
+.tab{font-size:12px;padding:9px 14px;color:#9d9d9d;border-right:1px solid #252526;white-space:nowrap}
+.tab.on{background:var(--bg);color:var(--text);box-shadow:inset 0 2px 0 var(--accent)}
+.workspace{flex:1;display:flex;min-height:0}
+.activity{width:46px;background:#333333;border-right:1px solid #252526;display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:20px;flex:none}
+.activity svg{width:22px;height:22px;stroke:#858585;fill:none;stroke-width:1.6}
+.activity svg.on{stroke:#fff}
+.editor{flex:1;position:relative;min-width:0;background:radial-gradient(900px 500px at 78% 12%,rgba(78,201,176,.08),transparent 70%),var(--bg)}
+.slides{position:absolute;inset:0}
+.slide{
+  position:absolute;inset:0;padding:clamp(28px,4vw,66px) clamp(30px,5vw,86px);
+  display:flex;flex-direction:column;justify-content:center;gap:22px;
+  opacity:0;transform:translateX(34px) scale(.992);filter:blur(5px);
+  transition:opacity .42s ease,transform .42s ease,filter .42s ease;
+  pointer-events:none;overflow:auto;
+}
+.slide.active{opacity:1;transform:none;filter:none;pointer-events:auto}
+.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(34px,5.2vw,70px);line-height:1.02;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h2{font-size:clamp(26px,3.4vw,44px);line-height:1.1;font-weight:700;letter-spacing:-.02em}
+h3{font-size:clamp(17px,2vw,23px);color:var(--fn);font-weight:600}
+p{line-height:1.55;color:#c8c8c8;max-width:78ch}
+.sub{color:var(--muted);font-size:clamp(14px,1.5vw,19px)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:20px 22px;backdrop-filter:blur(16px);box-shadow:0 18px 48px rgba(0,0,0,.28)}
+.card h3{margin-bottom:10px}
+.code{background:#1b1b1b;border:1px solid var(--border);border-radius:10px;padding:18px 20px;font-size:clamp(13px,1.45vw,18px);line-height:1.8;overflow:auto}
+.code .kw{color:var(--kw)}.code .fn{color:var(--fn)}.code .num{color:var(--num)}.code .str{color:var(--str)}.code .com{color:var(--com)}.code .op{color:var(--blue)}
+.formula{color:var(--num);font-size:clamp(17px,2.2vw,30px);line-height:1.5;word-break:break-word}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(78,201,176,.35);background:rgba(78,201,176,.09);color:var(--accent);border-radius:999px;padding:6px 12px;font-size:12px}
+ul{list-style:none;display:grid;gap:12px}
+li{position:relative;padding-left:26px;line-height:1.5;color:#cfcfcf}
+li:before{content:"›";position:absolute;left:0;color:var(--accent);font-size:20px;line-height:1}
+.frag{opacity:0;transform:translateY(14px);filter:blur(4px);transition:opacity .38s ease,transform .38s ease,filter .38s ease}
+.frag.shown{opacity:1;transform:none;filter:none}
+.frag.d1{transition-delay:.07s}.frag.d2{transition-delay:.14s}.frag.d3{transition-delay:.21s}
+.figure{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#141414;display:flex;flex-direction:column}
+.figure img{width:100%;height:auto;display:block;aspect-ratio:16/10;object-fit:cover}
+.figure figcaption{padding:10px 12px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+table{border-collapse:collapse;width:100%;font-size:clamp(12px,1.3vw,16px)}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+th{color:var(--accent);font-weight:600}
+td:nth-child(n+3){font-variant-numeric:tabular-nums}
+.bar{height:8px;background:#2f2f2f;border-radius:6px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#569cd6,#4ec9b0);transition:width 1s cubic-bezier(.2,.8,.2,1) .25s}
+.slide.active .bar i{width:var(--w)}
+.statusbar{height:26px;flex:none;background:#007acc;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:11px;gap:14px}
+.statusbar span{opacity:.92;white-space:nowrap}
+.progress{position:fixed;left:0;top:0;height:3px;background:var(--accent);z-index:5;transition:width .35s ease;width:0}
+.nav{position:fixed;right:18px;bottom:42px;z-index:6;display:flex;gap:8px}
+.nav button{background:rgba(37,37,38,.9);border:1px solid var(--border);color:var(--text);width:42px;height:42px;border-radius:9px;cursor:pointer;font:inherit;font-size:18px;backdrop-filter:blur(8px)}
+.nav button:hover{border-color:var(--accent);color:var(--accent)}
+.counter{position:fixed;left:62px;bottom:38px;z-index:6;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.help{position:fixed;inset:0;z-index:9;background:rgba(10,10,10,.86);display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.help.on{display:flex}
+.help .card{max-width:560px}
+.key{color:var(--fn)}
+@media (max-width:900px){.g3,.g2{grid-template-columns:1fr}.menu{display:none}.activity{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}#particles{display:none}}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="progress" id="progress"></div>
+<div class="ide">
+  <div class="titlebar">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="menu">Arquivo · Editar · Ver · Presentación</div>
+    <div class="tabs">
+      <div class="tab on">Newton.py</div><div class="tab">Halley.py</div>
+      <div class="tab">Chebyshev.py</div><div class="tab">memoria.md</div>
+    </div>
+  </div>
+  <div class="workspace">
+    <aside class="activity">
+      <svg viewBox="0 0 24 24" class="on"><path d="M4 4h7v7H4zM4 13h7v7H4zM13 4h7v7h-7zM13 13h7v7h-7z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 9h8M8 13h8M8 17h5"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M6 4l5 8-5 8M13 20h5"/></svg>
+    </aside>
+    <main class="editor"><div class="slides" id="slides">
+
+      <section class="slide active">
+        <div class="eyebrow">Traballo de Análise Matemática · 2026/2027</div>
+        <h1>Métodos iterativos<br>e fractais complexos</h1>
+        <p class="sub">Newton · Halley · Chebyshev sobre f(z) = z³ − 2z + 2</p>
+        <div class="grid g3">
+          <div class="card frag d1"><h3>Método</h3><p>Tres iteracións, tres funcións g(z), unha soa función.</p></div>
+          <div class="card frag d2"><h3>Results</h3><p>7,02 · 3,98 · 5,28 iteracións de media nunha malla 601 × 601.</p></div>
+          <div class="card frag d3"><h3>Defensa</h3><p>Raíces simples, polos de g e concas irregulares.</p></div>
+        </div>
+        <p class="sub frag d3">→ ou Espazo para avanzar · H para axuda</p>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">01 · Obxectivos</div>
+        <h2>Que queremos conseguir</h2>
+        <div class="grid g2">
+          <ul>
+            <li class="frag">Aproximar raíces dunha función complexa por iteración.</li>
+            <li class="frag">Entender que é unha conca de atracción e por que a fronteira é fractal.</li>
+            <li class="frag">Comparar Newton, Halley e Chebyshev coa mesma f.</li>
+            <li class="frag">Obter tres imaxes orixinais, nítidas e xustificadas.</li>
+          </ul>
+          <div class="code frag d2"><span class="com"># función do grupo</span><br>
+            <span class="kw">import</span> sympy <span class="kw">as</span> sp<br>
+            z = sp.Symbol(<span class="str">'z'</span>)<br>
+            f = z<span class="op">**</span><span class="num">3</span> <span class="op">-</span> <span class="num">2</span><span class="op">*</span>z <span class="op">+</span> <span class="num">2</span><br>
+            df = sp.diff(f, z)   <span class="com"># 3z²-2</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">02 · Newton</div>
+        <h2>A tanxente como motor</h2>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Deducción</h3>
+            <p>Taylor de orde 1: 0 = f(xₙ) + f′(xₙ)(c − xₙ). Despexando c e substituíndoo pola seguinte aproximación.</p>
+            <p class="formula frag">xₙ₊₁ = xₙ − f(xₙ)/f′(xₙ)</p>
+            <p class="frag">Xeometricamente: o corte da tanxente co eixo OX. Orde 2 para raíz simple.</p>
+          </div>
+          <div class="code frag d2"><span class="kw">from</span> sympy <span class="kw">import</span> simplify<br><br>
+            g = simplify(z <span class="op">-</span> f<span class="op">/</span>derf)<br>
+            <span class="com"># g(z) = 2(z³-1)/(3z²-2)</span><br>
+            gg = lambdify(z, g, <span class="str">"numpy"</span>)<br>
+            z = gg(z)   <span class="com"># un paso</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">03 · Halley</div>
+        <h2>Curvatura e aproximante racional</h2>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Historia e fórmula</h3>
+            <p class="frag">Edmond Halley (1656–1742), astrónomo inglés, publicou o método a finais do sé XVII. Hoxe é o aproximante de Padé (1,1) da inversa.</p>
+            <p class="formula frag">xₙ₊₁ = xₙ − 2ff′ / (2f′² − ff″)</p>
+            <p class="frag">Usa a hipérbola osculatriz: non só a pendente, tamén f″. Orde 3 para raíz simple.</p>
+          </div>
+          <div class="code frag d2"><span class="com"># derivada segunda: f'' = 6z</span><br>
+            derf2 = sp.diff(f, z, <span class="num">2</span>)<br><br>
+            g = simplify(z <span class="op">-</span> (<span class="num">2</span><span class="op">*</span>f<span class="op">*</span>derf)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; <span class="op">/</span> (<span class="num">2</span><span class="op">*</span>derf<span class="op">**</span><span class="num">2</span> <span class="op">-</span> f<span class="op">*</span>derf2))<br>
+            <span class="com"># 99,69 % converge en &lt;10 pasos</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">04 · Chebyshev</div>
+        <h2>A parábola osculatriz</h2>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Fórmula</h3>
+            <p class="formula">xₙ₊₁ = xₙ − f/f′ − f″f²/(2f′³)</p>
+            <p class="frag">Corrección polinómica engadida ao paso de Newton. Intersección do eixo OX coa parábola osculatriz en (xₙ, f(xₙ)).</p>
+            <p class="frag">Mesma orde 3 ca Halley, natureza distinta: polinomio fronte a racional.</p>
+          </div>
+          <div class="code frag d2"><span class="com"># Chebyshev</span><br>
+            g = simplify(z <span class="op">-</span> f<span class="op">/</span>derf<br>
+            &nbsp;&nbsp; <span class="op">-</span> derf2<span class="op">*</span>f<span class="op">**</span><span class="num">2</span><span class="op">/</span>(<span class="num">2</span><span class="op">*</span>derf<span class="op">**</span><span class="num">3</span>))<br><br>
+            <span class="com"># media 5,28 iteracións</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">05 · A función</div>
+        <h2>z³ − 2z + 2</h2>
+        <div class="grid g3">
+          <div class="card"><h3>Raíces</h3><p class="frag">−1,769292<br>0,884646 ± 0,589743i</p><p class="sub">Tres raíces simples, sen simetría rotacional.</p></div>
+          <div class="card"><h3>Derivadas</h3><p class="frag">f′ = 3z² − 2<br>f″ = 6z</p><p class="sub">SymPy simplifica sen problemas.</p></div>
+          <div class="card"><h3>A guarda</h3><p class="frag">f′ se anula en ±0,816497. Alí g ten polos; <span class="fn">abs(g(z)) &lt; 1/tol</span> corta a iteración.</p></div>
+        </div>
+        <p class="sub frag d3">Ao ser polinomio, non hai cortes de rama: só os polos de g explican os puntos illados.</p>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">06 · Fractais</div>
+        <h2>Tres concas, tres métodos</h2>
+        <div class="grid g3">
+          <figure class="figure frag"><img src="../../imaxes/fractal_Newton.png" alt="Fractal de Newton"><figcaption>Newton · media 7,02</figcaption></figure>
+          <figure class="figure frag d1"><img src="../../imaxes/fractal_Halley.png" alt="Fractal de Halley"><figcaption>Halley · media 3,98</figcaption></figure>
+          <figure class="figure frag d2"><img src="../../imaxes/fractal_Chebyshev.png" alt="Fractal de Chebyshev"><figcaption>Chebyshev · media 5,28</figcaption></figure>
+        </div>
+        <p class="sub frag d3">Mesma ventá [−2, 2] × [−2, 2], malla 601 × 601, paleta turbo, 300 dpi.</p>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">07 · Resultados</div>
+        <h2>Os números, sen adornos</h2>
+        <div class="grid g2">
+          <table class="card frag">
+            <tr><th>Método</th><th>Orde</th><th>Media</th><th>&lt;10 pasos</th></tr>
+            <tr><td>Newton</td><td>2</td><td>7,02</td><td>86,45 %</td></tr>
+            <tr><td>Halley</td><td>3</td><td>3,98</td><td>99,69 %</td></tr>
+            <tr><td>Chebyshev</td><td>3</td><td>5,28</td><td>93,04 %</td></tr>
+          </table>
+          <div class="card frag d2">
+            <h3>Converxencia en menos de 10 pasos</h3>
+            <p>Newton 86,45 %<div class="bar"><i style="--w:86.45%"></i></div></p>
+            <p>Halley 99,69 %<div class="bar"><i style="--w:99.69%"></i></div></p>
+            <p>Chebyshev 93,04 %<div class="bar"><i style="--w:93.04%"></i></div></p>
+          </div>
+        </div>
+        <p class="sub frag d3">A orde teórica non decide o resultado: importan a forma das concas e os polos de g.</p>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">08 · Conclusións</div>
+        <h2>O que se pode defender</h2>
+        <ul>
+          <li class="frag">As tres fórmulas son correctas e están verificadas con SymPy.</li>
+          <li class="frag">Halley foi o máis rápido nesta función e nesta ventá.</li>
+          <li class="frag">As raíces son simples, pero os polos de g en ±0,816497 condicionan a imaxe.</li>
+          <li class="frag">As tres concas teñen tamaños e formas distintos: non hai repetición radial.</li>
+          <li class="frag">Bibliografía: Varona [1], [2], 3B1B [3], Gleick [4].</li>
+        </ul>
+      </section>
+
+      <section class="slide">
+        <div class="eyebrow">09 · Defensa</div>
+        <h2>Preguntas que poden caer</h2>
+        <div class="grid g2">
+          <ul>
+            <li class="frag">Por que f′(0) non se anula e que significa iso?</li>
+            <li class="frag">Onde están os polos de g e que fai a guarda?</li>
+            <li class="frag">Halley ten orde 3: por que non sempre é o máis rápido?</li>
+          </ul>
+          <div class="code frag d2"><span class="com"># reproducir desde a raíz do repo</span><br>
+            python Newton.py<br>
+            python Halley.py<br>
+            python Chebyshev.py<br><br>
+            <span class="com"># saída: imaxes/fractal_*.png</span>
+          </div>
+        </div>
+        <p class="sub frag d3">Grazas. Preguntas.</p>
+      </section>
+
+    </div></main>
+  </div>
+  <div class="statusbar">
+    <span>⎇ vibedv2</span><span id="status-line">Ln 1, Col 1 · Python · UTF-8</span><span>AM 2026/2027 · ESEI Ourense</span>
+  </div>
+</div>
+<div class="nav"><button id="prev" title="Anterior (←)">‹</button><button id="next" title="Seguinte (→)">›</button></div>
+<div class="counter" id="counter">01 / 10</div>
+<div class="help" id="help"><div class="card"><h3>Controis</h3><ul>
+  <li><span class="key">→ / Espazo</span>: seguinte paso ou diapositiva</li>
+  <li><span class="key">←</span>: paso anterior ou diapositiva anterior</li>
+  <li><span class="key">F</span>: pantalla completa</li>
+  <li><span class="key">P</span>: activar ou desactivar partículas</li>
+  <li><span class="key">H</span>: pechar esta axuda</li>
+</ul></div></div>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const counter=document.getElementById('counter');
+  const progress=document.getElementById('progress');
+  const status=document.getElementById('status-line');
+  const help=document.getElementById('help');
+  let idx=0;
+  function paint(){
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    counter.textContent=String(idx+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    progress.style.width=((idx+1)/slides.length*100)+'%';
+    status.textContent='Ln '+(idx+1)+', Col 1 · '+['Newton.py','Halley.py','Chebyshev.py','memoria.md'][idx%4]+' · UTF-8';
+  }
+  function go(n,back){
+    if(n<0||n>=slides.length)return;
+    idx=n;
+    if(back)slides[idx].querySelectorAll('.frag').forEach(f=>f.classList.add('shown'));
+    paint();
+  }
+  function next(){
+    const s=slides[idx];
+    const pend=[...s.querySelectorAll('.frag:not(.shown)')];
+    if(pend.length){pend[0].classList.add('shown');return;}
+    go(idx+1,false);
+  }
+  function prev(){
+    const s=slides[idx];
+    const done=[...s.querySelectorAll('.frag.shown')].reverse();
+    if(done.length){done[0].classList.remove('shown');return;}
+    go(idx-1,true);
+  }
+  document.getElementById('next').addEventListener('click',next);
+  document.getElementById('prev').addEventListener('click',prev);
+  window.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+    else if(e.key==='Home'){go(0,false);}
+    else if(e.key==='End'){go(slides.length-1,true);}
+    else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+    else if(e.key.toLowerCase()==='h'){help.classList.toggle('on');}
+    else if(e.key.toLowerCase()==='p'){canvas.style.display=canvas.style.display==='none'?'':'none';}
+  });
+  document.addEventListener('click',e=>{if(e.target.closest('button')||e.target.closest('.help'))return;next();});
+  paint();
+
+  const canvas=document.getElementById('particles');
+  const ctx=canvas.getContext('2d');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dots=[],w=0,h=0,dpr=1;
+  function size(){
+    dpr=Math.min(window.devicePixelRatio||1,1.5);
+    w=window.innerWidth;h=window.innerHeight;
+    canvas.width=w*dpr;canvas.height=h*dpr;
+    canvas.style.width=w+'px';canvas.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.min(70,Math.floor(w*h/26000));
+    dots=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:.6+Math.random()*1.4}));
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(const d of dots){
+      if(!reduce){d.x+=d.vx;d.y+=d.vy;if(d.x<0||d.x>w)d.vx*=-1;if(d.y<0||d.y>h)d.vy*=-1;}
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fillStyle='rgba(78,201,176,.55)';ctx.fill();
+    }
+    for(let i=0;i<dots.length;i++)for(let j=i+1;j<dots.length;j++){
+      const a=dots[i],b=dots[j],dx=a.x-b.x,dy=a.y-b.y,dist=dx*dx+dy*dy;
+      if(dist<15000){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(86,156,214,'+(.14*(1-dist/15000))+')';ctx.lineWidth=.6;ctx.stroke();}
+    }
+    if(!reduce)requestAnimationFrame(draw);
+  }
+  size();draw();window.addEventListener('resize',()=>{size();if(reduce)draw();});
+})();
+</script>
+</body>
+</html>

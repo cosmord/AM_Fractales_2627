@@ -8,7 +8,7 @@ import os
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
-f=z/sp.sqrt(z**2+z)
+f=z**3-2*z+2
 
 #Definimos a derivada da función anterior e a segunda derivada, necesaria para Chebyshev:
 
@@ -19,7 +19,7 @@ derf2=Derivative(f,z,2).doit()
 #x_{n+1} = x_n - f(x_n)/f'(x_n) - f(x_n)^2*f''(x_n)/(2*f'(x_n)^3)
 #Expresado como punto fixo g(z) para poder reutilizar o bucle de Newton:
 
-g=simplify(z - f/derf - (f**2*derf2)/(2*derf**3))
+g=simplify(z - f/derf - derf2*f**2/(2*derf**3))
 
 # Os seguintes parámetros poden ser modificados co obxetivo de
 #conseguir os mellores gráficos posibles:
@@ -28,14 +28,14 @@ maxiter=30
 
 #O fractal representarase no rectángulo [a,b]x[c,d]:
 
-a=-1.1
-b=0.6
-c=-0.5
-d=0.5
+a=-2.0
+b=2.0
+c=-2.0
+d=2.0
 
 #Número de puntos usados nos eixos OX e OY para representar o fractal:
 
-npuntos=300
+npuntos=600
 
 ################### NON MODIFICAR ESTA PARTE DO PROGRAMA #####################
 ##############################################################################
@@ -48,8 +48,8 @@ tol=1.0e-6
 x=np.linspace(a,b,npuntos+1)
 y=np.linspace(c,d,npuntos+1)
 
-for i in range(0,npuntos):
-    for j in range(0,npuntos):
+for i in range(0,npuntos+1):
+    for j in range(0,npuntos+1):
         z = complex(x[i],y[j])
         n=0
         while (n<maxiter and abs(ff(z))>tol):
@@ -73,8 +73,8 @@ print('A función do método de Chebyshev é: g(z)=',g)
 plt.figure(figsize=(9, 6))
 plt.imshow(fractal,cmap='turbo', extent=(a, b, c, d))
 plt.colorbar(label='iteracións')
-plt.xlabel("x")
-plt.ylabel("y")
+plt.xlabel("Re(z)")
+plt.ylabel("Im(z)")
 
 os.makedirs('imaxes', exist_ok=True)
 plt.savefig('imaxes/fractal_Chebyshev.png', dpi=300, bbox_inches='tight')

@@ -8,7 +8,7 @@ import os
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
-f=z/sp.sqrt(z**2+z)
+f=z**3-2*z+2
 
 
 #Definimos a derivada da función anterior. Se fose necesario para algún método
@@ -32,16 +32,16 @@ maxiter=30
 
 #O fractal representarase no rectángulo [a,b]x[c,d]: 
 
-a=-1.1
-b=0.6
-c=-0.5
-d=0.5
+a=-2.0
+b=2.0
+c=-2.0
+d=2.0
 
 #Número de puntos usados nos eixos OX e OY para representar o fractal: canto
 #maior sexa o número de puntos máis preciso sera o gráfico, pero tamén máis
 #tempo se necesitará para levar a cabo os cálculos.
 
-npuntos=300
+npuntos=600
 
 ################### NON MODIFICAR ESTA PARTE DO PROGRAMA #####################
 ##############################################################################
@@ -54,8 +54,8 @@ tol=1.0e-6
 x=np.linspace(a,b,npuntos+1)
 y=np.linspace(c,d,npuntos+1)
 
-for i in range(0,npuntos):
-    for j in range(0,npuntos):
+for i in range(0,npuntos+1):
+    for j in range(0,npuntos+1):
         z = complex(x[i],y[j])
         n=0
         while (n<maxiter and abs(ff(z))>tol):
@@ -78,10 +78,11 @@ print('A función do método de Newton é: g(z)=',g)
 #A continuación represéntase a imaxen fractal: recoméndase buscar unha gama de 
 #cores atractiva. 
 
+plt.figure(figsize=(9, 6))
 plt.imshow(fractal,cmap='turbo', extent=(a, b, c, d))
 plt.colorbar(label='iteracións')
-plt.xlabel("x")
-plt.ylabel("y")
+plt.xlabel("Re(z)")
+plt.ylabel("Im(z)")
 
 # A imaxe gárdase nun ficheiro: cambiar o nome segundo o método usado
 

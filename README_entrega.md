@@ -19,7 +19,7 @@ Alumno que realiza a presentación: _______________________________________
 
 ## Función escollida
 
-f(z) = z / sqrt(z² + z). Cada grupo usa unha función distinta. As derivadas e as funcións de iteración calculáronse con SymPy.
+f(z) = z³ - 2z + 2. Cada grupo usa unha función distinta. Esta non pertence á familia zⁿ - 1 e as súas tres raíces dan concas de tamaños distintos. As derivadas son f'(z) = 3z² - 2 e f''(z) = 6z.
 
 ## Reprodución dos resultados
 
@@ -31,7 +31,7 @@ python Halley.py
 python Chebyshev.py
 ```
 
-Cada script escribe a súa imaxe en `imaxes/` e non abre ventá. Parámetros comúns: ventá [-1.1, 0.6] x [-0.5, 0.5], 300 puntos por eixo, 30 iteracións máximas e tolerancia 1e-6.
+Cada script escribe a súa imaxe en `imaxes/` e non abre ventá. Parámetros comúns: ventá [-2, 2] x [-2, 2], 600 puntos por eixo, 30 iteracións máximas e tolerancia 1e-6.
 
 ## Nota
 

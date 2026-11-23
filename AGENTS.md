@@ -18,7 +18,7 @@ No inventar datos para la memoria: fechas, nombres del grupo, notas ni resultado
 |---|---|
 | `README.md`, `AGENTS.md`, `docs/*.md` | `docs/Traballo_AM.pdf` |
 | `Halley.py`, `Chebyshev.py` (crear desde copia) | Bloque "NON MODIFICAR" de `Newton.py` |
-| `fractal_*.png`, memoria, presentación | Firma y cuerpo del bucle de `Newton.py` |
+| `fractal_*.png`, memoria, presentación | Firma del bucle de `Newton.py` (los rangos `range(0,npuntos+1)` se ampliaron expresamente para cubrir toda la malla) |
 | En `Newton.py`: `f`, `maxiter`, `a`, `b`, `c`, `d`, `npuntos`, `cmap`, `dpi` | `tol` y la guarda `abs(gg(z)) < 1/tol` |
 
 ## Flujo de trabajo

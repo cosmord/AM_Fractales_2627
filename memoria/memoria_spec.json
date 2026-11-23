@@ -1,0 +1,69 @@
+{
+  "title": "Traballo de Análise Matemática - Fractais e métodos iterativos",
+  "author": "Grao en Enxeñaría Informática - UVigo",
+  "page_size": "A4",
+  "page_numbers": true,
+  "elements": [
+    {"type": "heading", "text": "Traballo de Análise Matemática", "level": 1},
+    {"type": "heading", "text": "Métodos iterativos de resolución de ecuacións: obtención de gráficos fractais co ordeador", "level": 2},
+    {"type": "paragraph", "text": "Curso 2026/2027. Universidade de Vigo, Departamento de Matemáticas, ESEI Ourense. Grao en Enxeñaría Informática."},
+    {"type": "paragraph", "text": "GRUPO: _______________________________________ Alumno que realiza a presentación: _______________________________________"},
+    {"type": "pagebreak"},
+
+    {"type": "heading", "text": "1. Introdución", "level": 1},
+    {"type": "paragraph", "text": "Unha raíz dunha función f é un valor c tal que f(c) = 0. Moitas ecuacións non se poden resolver de forma exacta, polo que se aproximan as súas raíces mediante sucesións iterativas: partindo dun valor inicial x0, calcúlase x1, x2 e así sucesivamente ata que a sucesión se estabiliza."},
+    {"type": "paragraph", "text": "Os mesmos métodos poden aplicarse a funcións complexas f : C -> C. Nese caso o plano complexo identifícase con R². O conxunto de puntos iniciais que converxen a unha raíz determinada chámase conca de atracción desa raíz. A fronteira entre dúas concas é, en xeral, un conxunto fractal: ten detalle a calquera escala e non se pode describir con curvas suaves. A aparición dos ordenadores permitiu visualizar estas fronteiras por primeira vez."},
+    {"type": "paragraph", "text": "Os obxectivos deste traballo son: describir os métodos de Newton, Halley e Chebyshev; elixir unha función complexa propia do grupo; xerar o fractal asociado a cada método modificando soamente a función de iteración; e comparar os resultados desde o punto de vista numérico e estético."},
+
+    {"type": "heading", "text": "2. Método de Newton", "level": 1},
+    {"type": "paragraph", "text": "Deducción. Supoñamos que c é unha raíz de f e que x0 está próximo a c. Se f é derivable, aproximamos f polo polinomio de Taylor de orde 1 arredor de xn: f(x) = f(xn) + f'(xn)(x - xn) + termos de orde superior. Na raíz, f(c) = 0, polo que 0 = f(xn) + f'(xn)(c - xn). Despexe: c = xn - f(xn)/f'(xn). A iteración de Newton define x_{n+1} = xn - f(xn)/f'(xn), para n = 0, 1, 2, ..."},
+    {"type": "paragraph", "text": "Interpretación xeométrica. En cada paso trázase a recta tanxente á curva y = f(x) no punto (xn, f(xn)). O seguinte valor x_{n+1} é a intersección desa tanxente co eixo OX. O proceso repítese ata que a sucesión se achega á raíz."},
+    {"type": "paragraph", "text": "Convergencia. Se f'(c) non é nulo e x0 é suficientemente próximo a c, o erro verifica que |x_{n+1} - c| é menor ca K |x_n - c|²: a convergencia é cuadrática. O método pode fallar se a derivada se anula, se x0 está lonxe da raíz ou se a sucesión entra nun ciclo."},
+    {"type": "paragraph", "text": "En variable complexa a fórmula é z_{n+1} = z_n - f(z_n)/f'(z_n). Agora o plano enteiro é dominio de partida, e a pregunta xa non é só se se converxe, senón cara a que raíz se converxe. Esa é a orixe dos fractais de Newton."},
+
+    {"type": "heading", "text": "3. Método de Halley", "level": 1},
+    {"type": "paragraph", "text": "Contexto histórico. O método leva o nome de Edmond Halley (1656-1742), astrónomo inglés coñecido polo cometa que leva o seu nome. Publicou a súa iteración a finais do século XVII. É o segundo membro da familia de métodos de Householder, despois de Newton, e hoxe interpretase como un aproximante de Padé (1,1) da función inversa."},
+    {"type": "paragraph", "text": "Deducción. Partimos da aproximación de Taylor de orde 2: 0 = f(xn) + f'(xn)(x_{n+1} - xn) + f''(xn)(x_{n+1} - xn)²/2. En lugar de resolver esta ecuación polinómica, substitúse o salto de Newton -f(xn)/f'(xn) nun dos factores e despégase. Resulta a fórmula de Halley: x_{n+1} = xn - f(xn)f'(xn) / ( f'(xn)² - f(xn)f''(xn)/2 )."},
+    {"type": "paragraph", "text": "Forma equivalente, máis próxima a Newton: x_{n+1} = xn - (f(xn)/f'(xn)) / (1 - f(xn)f''(xn)/(2 f'(xn)²)). Cando f'' é case nula, a corrección é case nula e Halley case coincide con Newton."},
+    {"type": "paragraph", "text": "Interpretación xeométrica. Newton usa só a recta tanxente, é dicir, o valor de f'. Halley engade información da segunda derivada: en lugar dunha liña usa unha aproximación racional que ten en conta a curvatura local. Por iso adoita acadar a raíz en menos pasos cando o punto inicial está preto."},
+    {"type": "paragraph", "text": "Convergencia. Para unha raíz simple, a orde de convergencia é 3: |x_{n+1} - c| é menor ca K |x_n - c|³. O custo por iteración é maior ca en Newton, ao necesitar f''."},
+
+    {"type": "heading", "text": "4. Método de Chebyshev", "level": 1},
+    {"type": "paragraph", "text": "Fórmula. x_{n+1} = xn - f(xn)/f'(xn) - f(xn)² f''(xn) / (2 f'(xn)³)."},
+    {"type": "paragraph", "text": "Deducción. Tamén aquí se parte da serie de Taylor de orde 2. Escrita como x_{n+1} = xn - f(xn)/f'(xn) - f''(xn)(x_{n+1} - xn)²/(2 f'(xn)), substitúse o salto de Newton -f(xn)/f'(xn) no termo cadrático. O resultado é unha corrección polinómica engadida ao paso de Newton."},
+    {"type": "paragraph", "text": "Interpretación xeométrica. Como Halley, ten en conta a curvatura, pero faino mediante un polinomio de grao 2 en vez dunha expresión racional. Chebyshev é a expansión polinómica de orde 2 da función inversa; Halley é a aproximación racional de orde (1,1). Ambas teñen orde 3 e poden combinarse na familia Chebyshev-Halley que estuda Varona na referencia [1]."},
+
+    {"type": "heading", "text": "5. A función do grupo", "level": 1},
+    {"type": "paragraph", "text": "Escollemos a función non polinómica f(z) = z / sqrt(z² + z). O programa calcula as derivadas con SymPy. A primeira derivada é derf(z) = z(-z - 1/2)/(z² + z)^(3/2) + 1/sqrt(z² + z). A segunda derivada, necesaria para Halley e Chebyshev, é derf2(z) = -(z(4 - 3(2z + 1)²/(z(z + 1)))/4 + 2z + 1)/(z(z + 1))^(3/2)."},
+    {"type": "paragraph", "text": "A función ten puntos de ramificación en z = 0 e z = -1, porque z² + z = z(z + 1) se anula nese puntos. A raíz simple da función está en z = 0 e en z = -1 aparece un polo. Nas imaxes emprégase a rama principal da raíz cadrada, que é a que devolve NumPy ao avaliar a función."},
+    {"type": "paragraph", "text": "Ao simplificar as funcións de iteración con SymPy obtéñense expresións moi sinxelas: Newton g(z) = -z(2z + 1), Halley g(z) = -z/(4z + 3) e Chebyshev g(z) = z²(4z + 3). Son as expresións que se usan nos tres programas e as que se amosan na memoria."},
+
+    {"type": "heading", "text": "6. Metodoloxía computacional", "level": 1},
+    {"type": "paragraph", "text": "Partimos do ficheiro Newton.py descargado de FAITIC. O programa ten dúas partes claramente separadas. Na primeira defínense f, as derivadas, a función de iteración g e os parámetros. Na segunda, marcada como NON MODIFICAR, convértense as expresións simbólicas en funcións numéricas con lambdify, xérase a malla de puntos e execútase o bucle de iteración."},
+    {"type": "table", "rows": [["Parámetro", "Valor", "Que fai"], ["a, b", "-1.1, 0.6", "Límites do eixo real"], ["c, d", "-0.5, 0.5", "Límites do eixo imaxinario"], ["npuntos", "300", "Pontes por eixo: malla de 301 x 301"], ["maxiter", "30", "Máximo de iteracións por punto"], ["tol", "1e-6", "Umbral de convergencia sobre |f(z)|"]], "header": true},
+    {"type": "paragraph", "text": "Para cada punto z0 = x[i] + i y[j] da malla, o bucle aplica z = g(z) mentres |f(z)| sexa maior ca tol e o número de iteracións sexa menor ca maxiter. Antes de cada paso comprobase |g(z)| menor ca 1/tol para evitar desbordamentos. O valor n de iteracións gárdase na matriz fractal, co eixo Y invertido para que a imaxe se lea como o plano complexo. Cada cor representa cantos pasos tarda en converxer ese punto."},
+    {"type": "paragraph", "text": "Para obter Halley.py e Chebyshev.py copiouse Newton.py e cambiouse soamente a definición de g e a incorporación de derf2. O bloque de iteración, a malla, a tolerancia e a guarda contra desbordamentos mantivéronse iguais. As tres imaxes xeráronse coa mesma ventá e os mesmos parámetros para que a comparación sexa xusta. Empregouse a paleta turbo, que ordea ben os niveis de iteración, e resolución de 300 puntos por eixo con 300 dpi de gardado."},
+
+    {"type": "heading", "text": "7. Resultados", "level": 1},
+    {"type": "paragraph", "text": "A táboa seguinte recolle os resultados numéricos obtidos ao executar os tres programas sobre a malla de 301 x 301 puntos. As porcentaxes calcúlanse sobre o total de puntos da imaxe."},
+    {"type": "table", "rows": [["Método", "g(z)", "Orde", "Media n", "Mediana n", "% en maxiter", "% n menor ca 10"], ["Newton", "-z(2z+1)", "2", "13,56", "7", "30,82 %", "63,85 %"], ["Halley", "-z/(4z+3)", "3", "25,22", "25", "0,04 %", "0,66 %"], ["Chebyshev", "z²(4z+3)", "3", "4,88", "4", "0,00 %", "94,68 %"]], "header": true},
+    {"type": "paragraph", "text": "O método de Chebyshev é o que converxe máis rápido nesta función e nesta ventá: case o 95 % dos puntos chega á tolerancia en menos de dez pasos. Newton deixa un 30,82 % dos puntos sen converxer en 30 iteracións, na súa maior parte preto da singularidade de z = -1. Halley, a pesar da súa orde cúbica, presenta un valor medio de iteracións máis alto porque moitos puntos se achegan ao polo, onde |f(z)| non baixa da tolerancia."},
+    {"type": "paragraph", "text": "Isto ilustra unha idea importante: a orde teórica de convergencia non determina por si soa o aspecto do fractal. A localización de raíces, polos e cortes de rama inflúe tanto como a fórmula do método."},
+    {"type": "image", "path": "imaxes/fractal_Newton.png", "width": 430},
+    {"type": "paragraph", "text": "Figura 1. Fractal do método de Newton. Obsérvanse as concas de atracción e a fronteira fractal entre elas."},
+    {"type": "image", "path": "imaxes/fractal_Halley.png", "width": 430},
+    {"type": "paragraph", "text": "Figura 2. Fractal do método de Halley, xerado coa mesma f e a mesma ventá."},
+    {"type": "image", "path": "imaxes/fractal_Chebyshev.png", "width": 430},
+    {"type": "paragraph", "text": "Figura 3. Fractal do método de Chebyshev. A distribución de cores reflexo dunha convergencia máis rápida."},
+
+    {"type": "heading", "text": "8. Conclusións", "level": 1},
+    {"type": "paragraph", "text": "Acadáronse os obxectivos propostos: describíronse os tres métodos iterativos, implementouse o fractal de Newton sobre unha función non polinómica propia do grupo e obtivéronse os fractais de Halley e Chebyshev cambiando unicamente a función de iteración. As tres imaxes teñen estrutura fractal, son orixinais e foron xeradas con alta resolución."},
+    {"type": "paragraph", "text": "A comparación numérica mostra que, para esta función, Chebyshev converxe moito máis rápido ca Newton e ca Halley, e que a presenza dun polo en z = -1 condiciona o comportamento dos tres métodos. Como limitacións están o número finito de iteracións, a resolución da malla e o uso da rama principal da raíz cadrada."},
+
+    {"type": "heading", "text": "9. Bibliografía", "level": 1},
+    {"type": "paragraph", "text": "[1] J. L. Varona, Graphic and numerical comparison between iterative methods, Math. Intelligencer 24 (2002), no. 1, 37-46."},
+    {"type": "paragraph", "text": "[2] J. L. Varona, Representación gráfica de fractales mediante un programa de cálculo simbólico, Gac. R. Soc. Mat. Esp. 6 (2003), 213-230."},
+    {"type": "paragraph", "text": "[3] 3B1B, Newton's Fractal (which Newton knew nothing about). Vídeo dispoñible en 3blue1brown.com/lessons/newtons-fractal."},
+    {"type": "paragraph", "text": "[4] J. Gleick, Caos: la creación de una ciencia, Crítica, 2012."}
+  ]
+}

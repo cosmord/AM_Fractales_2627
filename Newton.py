@@ -3,11 +3,12 @@ import numpy as np
 import sympy as sp
 from sympy import Symbol,Derivative,simplify,lambdify
 import matplotlib.pyplot as plt
+import os
 
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
-f=z/(z**2+z)**(1/2)
+f=z/sp.sqrt(z**2+z)
 
 
 #Definimos a derivada da función anterior. Se fose necesario para algún método
@@ -77,13 +78,13 @@ print('A función do método de Newton é: g(z)=',g)
 #A continuación represéntase a imaxen fractal: recoméndase buscar unha gama de 
 #cores atractiva. 
 
-plt.imshow(fractal,cmap='coolwarm', extent=(a, b, c, d))
-plt.colorbar()
+plt.imshow(fractal,cmap='turbo', extent=(a, b, c, d))
+plt.colorbar(label='iteracións')
 plt.xlabel("x")
 plt.ylabel("y")
 
-#A continuación gárdase a imaxen do fractal nun ficheiro: cambiar o nome do 
-#ficheiro según o método usado 
+# A imaxe gárdase nun ficheiro: cambiar o nome segundo o método usado
 
-plt.savefig('fractal_Newton.png', dpi=2000)
-plt.show()
+os.makedirs('imaxes', exist_ok=True)
+plt.savefig('imaxes/fractal_Newton.png', dpi=300, bbox_inches='tight')
+plt.close()

@@ -31,7 +31,7 @@ Tiene tres raíces simples: `-1,769292`, `0,884646 + 0,589743i` y `0,884646 - 0,
 | `c`, `d` | -2, 2 | Borde vertical, eje imaginario | Sí |
 | `npuntos` | 600 | Puntos por eje. La malla tiene `(npuntos+1)^2` puntos | Sí |
 | `tol` | 1e-6 | Umbral de convergencia sobre `|f(z)|` | No, está en el bloque fijo |
-| `cmap` | `turbo` | Gama de colores | Sí, por estética |
+| `cmap` | 3 colores + gris | Una color por raíz; gris si no converge | Sí, por estética |
 | `dpi` | 300 | Resolución del PNG guardado | Sí |
 
 Subir `npuntos` de 600 a 1200 cuadruplica el trabajo. Para probar, baja a 300 y sube solo la imagen final.
@@ -45,7 +45,7 @@ Para cada par de índices `i, j` entre `0` y `npuntos` se toma `z0 = x[i] + 1j*y
 3. Antes de aplicar `g`, comprueba `|g(z)| < 1/tol`, es decir, `< 1e6`. Si no se cumple, rompe el bucle. Así evita valores infinitos cuando la iterate se dispara.
 4. Escribe `n` en `fractal[npuntos-j, i]`. El `npuntos-j` invierte el eje Y para que la imagen se lea como el plano complejo.
 
-El color de cada píxel codifica cuántos pasos tardó en converger. Las zonas de un mismo color son la cuenca de atracción de una raíz. Las fronteras entre cuencas son el fractal.
+El color de cada píxel indica a qué raíz convergió. Las zonas de un mismo color son la cuenca de atracción de una raíz; el gris marca los puntos sin convergencia. Las fronteras entre cuencas son el fractal. El número de iteraciones se guarda aparte para las estadísticas.
 
 `gg(z)` es la función `g` completa ya convertida a numpy, no la derivada. Una llamada a `gg(z)` equivale a un paso de Newton. `ff(z)` es `f(z)` en numpy.
 

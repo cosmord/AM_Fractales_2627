@@ -3,12 +3,16 @@ import numpy as np
 import sympy as sp
 from sympy import Symbol,Derivative,simplify,lambdify
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import os
 
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
 f=z**3-2*z+2
+
+# Raíces da función, para colorear cada punto segundo a súa conca de atracción:
+raices = sorted([complex(r) for r in sp.nroots(f)], key=lambda w: (round(w.imag,6), round(w.real,6)))
 
 
 #Definimos a derivada da función anterior. Se fose necesario para algún método
@@ -49,6 +53,7 @@ npuntos=600
 ff=lambdify(z,f,"numpy")
 gg=lambdify(z,g,"numpy")
 fractal = np.zeros((npuntos+1,npuntos+1))
+cuncas = np.full((npuntos+1,npuntos+1), -1.0)
 tol=1.0e-6
 
 x=np.linspace(a,b,npuntos+1)
@@ -64,7 +69,10 @@ for i in range(0,npuntos+1):
                n=n+1
             else:
                break
-        fractal[npuntos-j,i]=float(n)  
+        fractal[npuntos-j,i]=float(n)
+        if abs(ff(z))<=tol:
+            k = min(range(len(raices)), key=lambda q: abs(z-raices[q]))
+            cuncas[npuntos-j,i] = float(k)  
 
 ##############################################################################
 ##############################################################################
@@ -79,8 +87,12 @@ print('A función do método de Newton é: g(z)=',g)
 #cores atractiva. 
 
 plt.figure(figsize=(9, 6))
-plt.imshow(fractal,cmap='turbo', extent=(a, b, c, d))
-plt.colorbar(label='iteracións')
+cmap = mcolors.ListedColormap(['#4a4a4a', '#4C78A8', '#F58518', '#54A24B'])
+norm = mcolors.BoundaryNorm([-1.5, -0.5, 0.5, 1.5, 2.5], 4)
+plt.imshow(cuncas, cmap=cmap, norm=norm, extent=(a, b, c, d))
+cb = plt.colorbar(ticks=[-1, 0, 1, 2])
+cb.ax.set_yticklabels(['sen converxencia', 'c1', 'c2', 'c3'])
+cb.set_label('raíz de converxencia')
 plt.xlabel("Re(z)")
 plt.ylabel("Im(z)")
 

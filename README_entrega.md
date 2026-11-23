@@ -19,7 +19,7 @@ Alumno que realiza a presentación: _______________________________________
 
 ## Función escollida
 
-f(z) = z³ - 2z + 2. Cada grupo usa unha función distinta. Esta non pertence á familia zⁿ - 1 e as súas tres raíces dan concas de tamaños distintos. As derivadas son f'(z) = 3z² - 2 e f''(z) = 6z.
+f(z) = z³ - 2z + 2. Cada grupo usa unha función distinta. Esta non pertence á familia z^n - 1 e as súas tres raíces dan concas de tamaños distintos. As derivadas son f'(z) = 3z² - 2 e f''(z) = 6z.
 
 ## Reprodución dos resultados
 

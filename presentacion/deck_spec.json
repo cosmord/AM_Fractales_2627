@@ -83,7 +83,7 @@
       ],
       "background": "F7F9FC",
       "slide_number": true,
-      "notes": "Un minuto e medio. As tres imaxes usan a mesma función f(z) = z³ - 2z + 2 e a mesma ventá [-2, 2] x [-2, 2]. Só cambia g(z). As tres raíces son -1,7693 e 0,8846 ± 0,5897i; as derivadas son 3z² - 2 e 6z."
+      "notes": "Un minuto e medio. As tres imaxes usan a mesma función f(z) = z³ - 2z + 2 e a mesma ventá [-2, 2] x [-2, 2]. Só cambia g(z). As cores indican a raíz de converxencia, non o número de pasos. As tres raíces son -1,7693 e 0,8846 ± 0,5897i; as derivadas son 3z² - 2 e 6z."
     },
     {
       "layout": "title_content",

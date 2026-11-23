@@ -187,3 +187,10 @@ Después de cerrar esta evaluación se corrigieron tres detalles señalados aqu�
 - **Figura:** `Newton.py` fija ahora `figsize=(9, 6)`, igual que los otros dos scripts.
 
 La nota de **8,5 / 10** corresponde al estado evaluado, anterior a estos ajustes. Queda pendiente, como se indicó, la identificación del grupo y del relator.
+
+### Revisión externa posterior
+
+- Se eliminó de la memoria la frase «contra o 30,92 % da función anterior»: no había tal función anterior en el documento.
+- Las tres figuras se colorean ahora por **raíz de converxencia** (tres colores, gris para non converxencia), no por número de pasos. La imagen de Halley, antes la más débil, muestra ahora tres concas con frontera fractal: verificado visualmente.
+- Se confirmó que la diapositiva 6 del PPTX lleva las tres imágenes embebidas (737 KB, 593 KB y 841 KB).
+- Los números de iteración siguen guardándose para las estadísticas; la tabla de resultados no cambia.

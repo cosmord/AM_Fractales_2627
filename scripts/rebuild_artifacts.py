@@ -77,12 +77,10 @@ def build_pdf():
 
 def build_pptx():
     import copy
-    from pptx import Presentation
-    from pptx.chart.data import CategoryChartData
-    from pptx.dml.color import RGBColor
-    from pptx.enum.chart import XL_CHART_TYPE
-    from pptx.enum.shapes import MSO_SHAPE
-    from pptx.util import Inches, Pt
+    from pptx import Presentation  # pyright: ignore[reportMissingImports]
+    from pptx.dml.color import RGBColor  # pyright: ignore[reportMissingImports]
+    from pptx.enum.shapes import MSO_SHAPE  # pyright: ignore[reportMissingImports]
+    from pptx.util import Inches, Pt  # pyright: ignore[reportMissingImports]
 
     LAYOUTS = {"title": 0, "title_content": 1, "section": 2, "two_content": 3, "title_only": 5, "blank": 6}
     SHAPES = {"rectangle": MSO_SHAPE.RECTANGLE, "rounded_rectangle": MSO_SHAPE.ROUNDED_RECTANGLE,
